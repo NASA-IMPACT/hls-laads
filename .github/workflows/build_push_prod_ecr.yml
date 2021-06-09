@@ -2,7 +2,7 @@ name: build_push_to_prod_ecr
 
 on:
   release:
-    branches: [ master ]
+    branches: [ main ]
     types: [ published ]
 
 jobs:
