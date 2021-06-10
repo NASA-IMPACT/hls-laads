@@ -37,4 +37,4 @@ jobs:
           secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           region: us-west-2
           local-image: hls-laads
-          image: hls-laads
+          image: hls-laads:test
