@@ -31,6 +31,12 @@ fi
 
 echo "running updatelads.py $LADSFLAG"
 updatelads.py $LADSFLAG
+
+if [ $? != 0 ];
+then
+    aws s3 sync /tmp/lads/2021 "s3://hls-debug-output/laads_error/"$AWS_BATCH_JOB_ID"/"
+fi
+
 echo "Creating listing of dates available."
 find . | grep -oP "L8ANC([0-9][0-9][0-9][0-9][0-9][0-9])\.hdf_fused$" > laadsavailable.txt
 
