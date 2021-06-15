@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 # Make sure that /var/lasrc_aux is a mountpoint
 echo "Checking mount status"
 mount | grep -q /var/lasrc_aux || exit 1
@@ -30,12 +30,16 @@ if [ -n "$LAADS_REPROCESS" ]; then
 fi
 
 echo "running updatelads.py $LADSFLAG"
-updatelads.py $LADSFLAG
-
-if [ $? != 0 ];
-then
-    aws s3 sync /tmp/lads/2021 "s3://hls-debug-output/laads_error/"$AWS_BATCH_JOB_ID"/"
+if ! updatelads.py $LADSFLAG; then
+    echo "updatelads.py failed"
+    echo "sync current /tmp/lads to s3://hls-debug-output/laads_error to debug"
+    aws s3 sync /tmp/lads "s3://hls-debug-output/laads_error/${AWS_BATCH_JOB_ID}/"
+    exit $?  # exit the bash script with the same status
 fi
+
+echo "Contents of /tmp/lads/2021"
+ls /tmp/lads/2021 
+
 
 echo "Creating listing of dates available."
 find . | grep -oP "L8ANC([0-9][0-9][0-9][0-9][0-9][0-9])\.hdf_fused$" > laadsavailable.txt
