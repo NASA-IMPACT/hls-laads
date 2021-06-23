@@ -34,8 +34,11 @@ if ! updatelads.py $LADSFLAG; then
     echo "updatelads.py failed"
     echo "sync current /tmp/lads to s3://hls-debug-output/laads_error to debug"
     aws s3 sync /tmp/lads "s3://hls-debug-output/laads_error/${AWS_BATCH_JOB_ID}/"
-    exit $?  # exit the bash script with the same status
+    exit 1
 fi
+
+ls /tmp/lads/2021 
+aws s3 sync /tmp/lads/2021 "s3://hls-debug-output/laads_error/"$AWS_BATCH_JOB_ID"/"
 
 echo "Contents of /tmp/lads/2021"
 ls /tmp/lads/2021 
