@@ -1,13 +1,14 @@
 #!/bin/bash
 # Make sure that /var/lasrc_aux is a mountpoint
+lasrc_directory="$LASRC_AUX_DIR"
 echo "Checking mount status"
-mount | grep -q /var/lasrc_aux || exit 1
-cd /var/lasrc_aux/ || exit 1
+mount | grep -q "$lasrc_directory" || exit 1
+cd "$lasrc_directory" || exit 1
 ls 
 df -h
 if [ -n "$LAADS_BUCKET_BOOTSTRAP" ]; then
-  echo "Syncing existing laads data from aws s3 bucket s3://$LAADS_BUCKET_BOOTSTRAP/lasrc_aux/"
-  aws s3 sync "s3://$LAADS_BUCKET_BOOTSTRAP/lasrc_aux/" .
+  echo "Syncing existing laads data from aws s3 bucket s3://$LAADS_BUCKET_BOOTSTRAP/viirs/lasrc_aux/"
+  aws s3 sync "s3://$LAADS_BUCKET_BOOTSTRAP/viirs/lasrc_aux/" .
 fi
 
 if [ ! -d LADS/2013 ]; then
@@ -45,6 +46,6 @@ rm MSILUT.tar.gz*
 rm lasrc_aux.2013-2017.tar.gz*
 
 if [ -n "$LAADS_BUCKET" ]; then
-  echo "Syncing data to s3 bucket s3://$LAADS_BUCKET/lasrc_aux/"
-  aws s3 sync . "s3://$LAADS_BUCKET/lasrc_aux/"
+  echo "Syncing data to s3 bucket s3://$LAADS_BUCKET/viirs/lasrc_aux/"
+  aws s3 sync . "s3://$LAADS_BUCKET/viirs/lasrc_aux/"
 fi

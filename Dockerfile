@@ -1,4 +1,4 @@
-FROM 018923174646.dkr.ecr.us-west-2.amazonaws.com/hls-base-3.2.0
+FROM 018923174646.dkr.ecr.us-west-2.amazonaws.com/hls-base-3.3.0
 RUN ln -fs /usr/bin/python2 /usr/bin/python &&\
   yum install -y openssl-devel &&\
   yum install -y ca-certificates &&\
