@@ -4,25 +4,28 @@ lasrc_directory="$LASRC_AUX_DIR"
 echo "Checking mount status"
 mount | grep -q "$lasrc_directory" || exit 1
 cd "$lasrc_directory" || exit 1
+mkdir -p viirs
+cd viirs || exit 1
 ls 
 df -h
-if [ -n "$LAADS_BUCKET_BOOTSTRAP" ]; then
-  echo "Syncing existing laads data from aws s3 bucket s3://$LAADS_BUCKET_BOOTSTRAP/viirs/lasrc_aux/"
-  aws s3 sync "s3://$LAADS_BUCKET_BOOTSTRAP/viirs/lasrc_aux/" .
-fi
 
-if [ ! -d LADS/2013 ]; then
-  echo "Archived data not here... fetching 2013-2017 data from USGS."
-  wget --no-http-keep-alive http://edclpdsftp.cr.usgs.gov/downloads/auxiliaries/lasrc_auxiliary/lasrc_aux.2013-2017.tar.gz
-  tar -xvzf lasrc_aux.2013-2017.tar.gz
-  rm lasrc_aux.2013-2017.tar.gz
-fi
+# if [ ! -d LADS/2013 ]; then
+  # echo "Archived data not here... fetching 2013-2017 data from USGS."
+  # wget --no-http-keep-alive http://edclpdsftp.cr.usgs.gov/downloads/auxiliaries/lasrc_auxiliary/lasrc_aux.2013-2017.tar.gz
+  # tar -xvzf lasrc_aux.2013-2017.tar.gz
+  # rm lasrc_aux.2013-2017.tar.gz
+# fi
 
 if [ ! -d MSILUT ]; then
   echo "MSILUT data not present... fetching from USGS."
   wget --no-http-keep-alive http://edclpdsftp.cr.usgs.gov/downloads/auxiliaries/lasrc_auxiliary/MSILUT.tar.gz
   tar -xvzf MSILUT.tar.gz
   rm MSILUT.tar.gz
+fi
+
+if [ -n "$LAADS_BUCKET_BOOTSTRAP" ]; then
+  echo "Syncing existing laads data from aws s3 bucket s3://$LAADS_BUCKET_BOOTSTRAP/lasrc_aux/viirs/"
+  aws s3 sync "s3://$LAADS_BUCKET_BOOTSTRAP/lasrc_aux/viirs/" .
 fi
 
 LADSFLAG='--today'
@@ -46,6 +49,6 @@ rm MSILUT.tar.gz*
 rm lasrc_aux.2013-2017.tar.gz*
 
 if [ -n "$LAADS_BUCKET" ]; then
-  echo "Syncing data to s3 bucket s3://$LAADS_BUCKET/viirs/lasrc_aux/"
-  aws s3 sync . "s3://$LAADS_BUCKET/viirs/lasrc_aux/"
+  echo "Syncing data to s3 bucket s3://$LAADS_BUCKET/lasrc_aux/viirs/"
+  aws s3 sync . "s3://$LAADS_BUCKET/lasrc_aux/viirs/"
 fi
