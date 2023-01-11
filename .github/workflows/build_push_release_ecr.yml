@@ -1,8 +1,8 @@
-name: build_push_to_prod_ecr
+name: build_push_release_ecr
 
 on:
   release:
-    branches: [ main ]
+    branches: [ master ]
     types: [ published ]
 
 jobs:
@@ -10,9 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Create more disk space
-        run: sudo rm -rf /usr/share/dotnet && sudo rm -rf /opt/ghc && sudo rm -rf "/usr/local/share/boost" && sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -30,8 +27,8 @@ jobs:
       - name: Build image
         run: docker build . --tag hls-laads
 
-      - name: Push to tagged ECR 3.1.0
-        id: push-tagged-ecr
+      - name: Push to prod ECR
+        id: push-prod-ecr
         uses: jwalton/gh-ecr-push@v1
         with:
           access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
