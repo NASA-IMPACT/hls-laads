@@ -10,7 +10,7 @@ ls
 df -h
 
 echo "running generate_monthly_climatology.py"
-generate_monthly_climatology.py
+generate_monthly_climatology.py -y 2021
 
 if [ -n "$LAADS_BUCKET" ]; then
   echo "Syncing data to s3 bucket s3://$LAADS_BUCKET/lasrc_aux/viirs/"
