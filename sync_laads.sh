@@ -28,13 +28,13 @@ if [ -n "$LAADS_BUCKET_BOOTSTRAP" ]; then
   aws s3 sync "s3://$LAADS_BUCKET_BOOTSTRAP/lasrc_aux/viirs/" .
 fi
 
-LADSFLAG='--today'
-if [ -n "$LAADS_REPROCESS" ]; then
-  LADSFLAG='--quarterly'
-fi
+# LADSFLAG='--today'
+# if [ -n "$LAADS_REPROCESS" ]; then
+  # LADSFLAG='--quarterly'
+# fi
 
-echo "running updatelads.py $LADSFLAG"
-if ! updatelads.py $LADSFLAG; then
+echo "running updatelads.py $LAADS_FLAG"
+if ! updatelads.py "$LAADS_FLAG"; then
     echo "updatelads.py failed"
     echo "sync current /tmp/lads to s3://hls-debug-output/laads_error to debug"
     aws s3 sync /tmp/lads "s3://hls-debug-output/laads_error/${AWS_BATCH_JOB_ID}/"
