@@ -15,6 +15,6 @@ echo "running generate_monthly_climatology.py for $year"
 generate_monthly_climatology.py -y "$year"
 
 if [ -n "$LAADS_BUCKET" ]; then
-  echo "Syncing data to s3 bucket s3://$LAADS_BUCKET/lasrc_aux/viirs/"
-  aws s3 sync . "s3://$LAADS_BUCKET/lasrc_aux/viirs/"
+  echo "Syncing data to s3 bucket s3://$LAADS_BUCKET/lasrc_aux/viirs/monthly_avgs" 
+  aws s3 sync "$LASRC_AUX_DIR/monthly_avgs/" "s3://$LAADS_BUCKET/lasrc_aux/viirs/monthly_avgs/"
 fi
