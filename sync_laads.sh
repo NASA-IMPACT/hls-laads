@@ -3,13 +3,9 @@
 lasrc_directory="$LASRC_AUX_DIR"
 echo "Checking mount status"
 mount | grep -q "$lasrc_directory" || exit 1
-cd "$lasrc_directory" || exit 1
-mkdir -p viirs
-cd viirs || exit 1
-ls 
-df -h
+mkdir -p "$lasrc_directory/viirs"
 
-export LASRC_AUX_DIR="$LASRC_AUX_DIR/viirs"
+export LASRC_AUX_DIR="$lasrc_directory/viirs"
 echo "Aux directory is $LASRC_AUX_DIR"
 
 # if [ ! -d LADS/2013 ]; then
