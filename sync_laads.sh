@@ -9,6 +9,9 @@ cd viirs || exit 1
 ls 
 df -h
 
+export LASRC_AUX_DIR="$LASRC_AUX_DIR/viirs"
+echo "Aux directory is $LASRC_AUX_DIR"
+
 # if [ ! -d LADS/2013 ]; then
   # echo "Archived data not here... fetching 2013-2017 data from USGS."
   # wget --no-http-keep-alive http://edclpdsftp.cr.usgs.gov/downloads/auxiliaries/lasrc_auxiliary/lasrc_aux.2013-2017.tar.gz

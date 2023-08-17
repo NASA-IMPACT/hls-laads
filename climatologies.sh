@@ -11,6 +11,12 @@ cd viirs || exit 1
 ls 
 df -h
 
+export LASRC_AUX_DIR="$LASRC_AUX_DIR/viirs"
+echo "Aux directory is $LASRC_AUX_DIR"
+
+export LASRC_AUX_DIR="$LASRC_AUX_DIR/viirs"
+echo "Aux directory is $LASRC_AUX_DIR"
+
 echo "running generate_monthly_climatology.py for $year"
 generate_monthly_climatology.py -y "$year"
 
