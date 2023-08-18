@@ -33,7 +33,7 @@ fi
 # fi
 
 echo "running updatelads.py $LAADS_FLAG"
-if ! updatelads.py "$LAADS_FLAG"; then
+if ! ./usr/local/updatelads.py "$LAADS_FLAG"; then
     echo "updatelads.py failed"
     echo "sync current /tmp/lads to s3://hls-debug-output/laads_error to debug"
     aws s3 sync /tmp/lads "s3://hls-debug-output/laads_error/${AWS_BATCH_JOB_ID}/"
