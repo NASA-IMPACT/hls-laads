@@ -7,7 +7,7 @@ RUN ln -fs /usr/bin/python2 /usr/bin/python &&\
 COPY sync_laads.sh ./usr/local/sync_laads.sh
 COPY climatologies.sh ./usr/local/climatologies.sh
 COPY updatelads.py  ./usr/local/bin/updatelads.py
+COPY generate_monthly_climatology.py ./usr/local/bin/generate_monthly_climatology.py
 
-# ENTRYPOINT ["/bin/sh", "-c"]
 
 CMD ["./usr/local/sync_laads.sh"]
