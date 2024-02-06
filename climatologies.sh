@@ -7,9 +7,7 @@ month="$CLIM_MONTH"
 echo "Checking mount status"
 mount | grep -q "$lasrc_directory" || exit 1
 cd "$lasrc_directory" || exit 1
-mkdir -p "$lasrc_directory/viirs"
 
-export LASRC_AUX_DIR="$lasrc_directory/viirs"
 echo "Aux directory is $LASRC_AUX_DIR"
 
 if [ -z "$CLIM_MONTH" ]; then
@@ -25,6 +23,6 @@ fi
 
 
 if [ -n "$LAADS_BUCKET" ]; then
-  echo "Syncing data to s3 bucket s3://$LAADS_BUCKET/lasrc_aux/viirs/monthly_avgs" 
-  aws s3 sync "$LASRC_AUX_DIR/monthly_avgs/" "s3://$LAADS_BUCKET/lasrc_aux/viirs/monthly_avgs/"
+  echo "Syncing data to s3 bucket s3://$LAADS_BUCKET/lasrc_aux/monthly_avgs/" 
+  aws s3 sync "$LASRC_AUX_DIR/monthly_avgs/" "s3://$LAADS_BUCKET/lasrc_aux/monthly_avgs/"
 fi
