@@ -2,7 +2,8 @@
 ### HLS processing container for downloading and syncing LAADS auxiliary data.
 The hls-laads container's primary purpose is executing a daily cron job to run the `updatelads.py` from [espa-surface-reflectance](https://github.com/NASA-IMPACT/espa-surface-reflectance/blob/eros-collection2-3.5.1/lasrc/landsat_aux/scripts/updatelads.py) which is installed as part of the [hls-base](https://github.com/NASA-IMPACT/hls-base) container.
 
-In order to support the use of LAADS DAAC token as an environment variable, the `updatelads.py` and `generate_monthly_climatology.py` scripts has been copied here and modified.
+In order to support the use of LAADS DAAC token as an environment variable, the `updatelads.py` and `generate_monthly_climatology.py` scripts has been copied here and modified rather than using the source versions installed as part of the [hls-base](https://github.com/NASA-IMPACT/hls-base) container.
+
 
 The container's default `CMD` is `sync_laads.sh`.  It requires the following environment variables to be set
 
@@ -32,7 +33,6 @@ The S3 bucket where auxiliary files should be synchronized for backup storage af
 LAADS_BUCKET_BOOTSTRAP
 ```
 Will use the S3 bucket specified in the environment variable to load an existing store of LAADS auxiliary data from a bucket onto the EFS partition mounted at `/var/lasrc_aux` prior to running `updatelads.py` 
-```
 
 Any error code > 500 reported by the LAADS DAAC servers while downloading data will result in the `sync_laads.sh` script and the container exiting with an exit code of 1 for tracking system level errors.
 
