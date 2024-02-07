@@ -15,6 +15,13 @@ if [ ! -d MSILUT ]; then
   rm MSILUT.tar.gz
 fi
 
+if [ ! -d LDCMLUT ]; then
+  echo "LDCMLUT data not present... fetching from USGS."
+  wget --no-http-keep-alive https://edclpdsftp.cr.usgs.gov/downloads/validations/for_HLS/lasrc_aux/lasrc_aux.zip
+  unzip lasrc_aux.zip 
+  rm lasrc_aux.zip
+fi
+
 if [ -n "$LAADS_BUCKET_BOOTSTRAP" ]; then
   echo "Syncing existing laads data from aws s3 bucket s3://$LAADS_BUCKET_BOOTSTRAP/lasrc_aux/"
   aws s3 sync "s3://$LAADS_BUCKET_BOOTSTRAP/lasrc_aux/" .
@@ -28,8 +35,6 @@ if ! updatelads.py "$LAADS_FLAG"; then
     exit 1
 fi
 
-# cleanup
-rm MSILUT.tar.gz*
 
 if [ -n "$LAADS_BUCKET" ]; then
   echo "Syncing data to s3 bucket s3://$LAADS_BUCKET/lasrc_aux/"
