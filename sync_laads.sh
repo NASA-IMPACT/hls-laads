@@ -6,7 +6,8 @@ mount | grep -q "$lasrc_directory" || exit 1
 
 echo "Aux directory is $LASRC_AUX_DIR"
 
-
+#Switch to the LASRC_AUX_DIR to check if MSILUT seed data is available.
+cd "$lasrc_directory"
 if [ ! -d MSILUT ]; then
   echo "MSILUT data not present... fetching from USGS."
   wget --no-http-keep-alive http://edclpdsftp.cr.usgs.gov/downloads/auxiliaries/lasrc_auxiliary/MSILUT.tar.gz
