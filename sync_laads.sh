@@ -28,12 +28,8 @@ if ! updatelads.py "$LAADS_FLAG"; then
     exit 1
 fi
 
-echo "Creating listing of dates available."
-find . | grep -oP "L8ANC([0-9][0-9][0-9][0-9][0-9][0-9])\.hdf_fused$" > laadsavailable.txt
-
 # cleanup
 rm MSILUT.tar.gz*
-rm lasrc_aux.2013-2017.tar.gz*
 
 if [ -n "$LAADS_BUCKET" ]; then
   echo "Syncing data to s3 bucket s3://$LAADS_BUCKET/lasrc_aux/"
